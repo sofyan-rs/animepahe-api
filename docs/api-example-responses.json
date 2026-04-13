@@ -1,0 +1,286 @@
+{
+  "version": "1.0",
+  "baseUrl": "http://localhost:3000",
+  "notes": [
+    "Examples are realistic samples for frontend/LLM wiring.",
+    "IDs/sessions/URLs below are mock values.",
+    "All API routes are under /api."
+  ],
+  "errorFormat": {
+    "status": 404,
+    "message": "Route not found. Please check the API documentation at https://github.com/ElijahCodes12345/animepahe-api"
+  },
+  "endpoints": {
+    "airing": {
+      "request": "GET /api/airing?page=1",
+      "response": {
+        "paginationInfo": {
+          "total": 1600,
+          "perPage": 30,
+          "currentPage": 1,
+          "lastPage": 54,
+          "nextPageUrl": "http://localhost:3000/api/airing?page=2",
+          "from": 1,
+          "to": 30
+        },
+        "data": [
+          {
+            "id": 8421,
+            "anime_id": 4432,
+            "title": "One Piece",
+            "episode": 1110,
+            "episode2": null,
+            "edition": null,
+            "fansub": "SubsPlease",
+            "image": "https://i.animepahe.ru/snapshots/example.jpg",
+            "disc": null,
+            "session": "one-piece-abc123",
+            "link": "https://animepahe.pw/anime/one-piece-abc123",
+            "filler": 0,
+            "created_at": "2026-04-12T18:40:00+00:00",
+            "completed": 1
+          }
+        ]
+      }
+    },
+    "search": {
+      "request": "GET /api/search?q=naruto&page=1",
+      "response": {
+        "paginationInfo": {
+          "total": 48,
+          "perPage": 15,
+          "currentPage": 1,
+          "lastPage": 4,
+          "nextPageUrl": "http://localhost:3000/api/search?q=naruto&page=2",
+          "from": 1,
+          "to": 15
+        },
+        "data": [
+          {
+            "id": 120,
+            "title": "Naruto",
+            "status": "Finished Airing",
+            "type": "TV",
+            "episodes": 220,
+            "score": 7.99,
+            "year": 2002,
+            "season": "Fall",
+            "poster": "https://i.animepahe.ru/posters/naruto.jpg",
+            "session": "naruto-xyz789",
+            "link": "https://animepahe.pw/anime/naruto-xyz789"
+          }
+        ]
+      }
+    },
+    "animeList": {
+      "request": "GET /api/anime?tab=A",
+      "response": [
+        {
+          "title": "A Sign of Affection",
+          "url": "/anime/a-sign-of-affection-z1y2x3",
+          "type": "TV"
+        },
+        {
+          "title": "Aho Girl",
+          "url": "/anime/aho-girl-a1b2c3",
+          "type": "TV"
+        }
+      ]
+    },
+    "animeInfo": {
+      "request": "GET /api/:session",
+      "exampleSession": "one-piece-abc123",
+      "response": {
+        "ids": {
+          "animepahe_id": "4432",
+          "anidb": "69",
+          "anilist": "21",
+          "animePlanet": "one-piece",
+          "ann": "3784",
+          "kitsu": "one-piece",
+          "mal": "21"
+        },
+        "title": "One Piece",
+        "image": "https://i.animepahe.ru/posters/onepiece.jpg",
+        "preview": "https://www.youtube.com/watch?v=example",
+        "synopsis": "Gold Roger was known as the Pirate King...",
+        "synonym": "OP",
+        "japanese": "ONE PIECE",
+        "type": "TV",
+        "episodes": "Unknown",
+        "status": "Currently Airing",
+        "duration": "24 min",
+        "aired": "Oct 20, 1999 to ?",
+        "season": "Fall",
+        "studio": "Toei Animation",
+        "themes": [
+          "Adventure",
+          "Fantasy"
+        ],
+        "demographic": [
+          "Shounen"
+        ],
+        "external_links": [
+          {
+            "name": "Official Site",
+            "url": "https://one-piece.com"
+          }
+        ],
+        "genre": [
+          "Action",
+          "Adventure",
+          "Fantasy"
+        ],
+        "relations": {
+          "Sequel": [
+            {
+              "title": "One Piece Special",
+              "url": "/anime/one-piece-special-123",
+              "session": "one-piece-special-123",
+              "image": "https://i.animepahe.ru/posters/special.jpg",
+              "type": "Special",
+              "episodes": "1",
+              "status": "Finished",
+              "season": ""
+            }
+          ]
+        },
+        "recommendations": [
+          {
+            "title": "Fairy Tail",
+            "url": "/anime/fairy-tail-456",
+            "image": "https://i.animepahe.ru/posters/fairytail.jpg",
+            "type": "TV",
+            "episodes": "175",
+            "status": "Finished",
+            "season": "Fall"
+          }
+        ]
+      }
+    },
+    "animeReleases": {
+      "request": "GET /api/:session/releases?sort=episode_desc&page=1",
+      "response": {
+        "paginationInfo": {
+          "total": 1100,
+          "perPage": 30,
+          "currentPage": 1,
+          "lastPage": 37,
+          "nextPageUrl": "http://localhost:3000/api/one-piece-abc123/releases?sort=episode_desc&page=2",
+          "from": 1,
+          "to": 30
+        },
+        "data": [
+          {
+            "id": 90001,
+            "anime_id": 4432,
+            "episode": 1110,
+            "episode2": null,
+            "edition": null,
+            "title": "The New Era Begins",
+            "snapshot": "https://i.animepahe.ru/snapshots/1110.jpg",
+            "disc": null,
+            "audio": "jpn",
+            "duration": "24:01",
+            "session": "ep-session-1110",
+            "link": "https://animepahe.pw/play/one-piece-abc123/ep-session-1110",
+            "filler": 0,
+            "created_at": "2026-04-12T11:00:00+00:00"
+          }
+        ]
+      }
+    },
+    "play": {
+      "request": "GET /api/play/:session?episodeId=:episodeSession&downloads=true",
+      "response": {
+        "ids": {
+          "animepahe_id": 4432,
+          "mal_id": 21,
+          "anilist_id": 21,
+          "anime_planet_id": 21,
+          "ann_id": 3784,
+          "anilist": "21",
+          "anime_planet": "one-piece",
+          "ann": "3784",
+          "kitsu": "one-piece",
+          "myanimelist": "21"
+        },
+        "session": "one-piece-abc123",
+        "provider": "kwik",
+        "episode": "1110",
+        "anime_title": "One Piece",
+        "sources": [
+          {
+            "url": "https://cdn.example.com/hls/1110/master.m3u8",
+            "isM3U8": true,
+            "embed": "https://kwik.cx/e/example",
+            "resolution": "1080",
+            "isDub": false,
+            "fanSub": "SubsPlease",
+            "download": "https://kwik.cx/mp4/example?file=AnimePahe_One_Piece_-_1110_1080p_SubsPlease.mp4"
+          },
+          {
+            "url": "https://cdn.example.com/hls/1110/720.m3u8",
+            "isM3U8": true,
+            "embed": "https://kwik.cx/e/example2",
+            "resolution": "720",
+            "isDub": false,
+            "fanSub": "SubsPlease",
+            "download": "https://kwik.cx/mp4/example2?file=AnimePahe_One_Piece_-_1110_720p_SubsPlease.mp4"
+          }
+        ],
+        "downloads": [
+          {
+            "fansub": "SubsPlease",
+            "quality": "1080p · 1.4GB",
+            "resolution": "1080",
+            "filesize": "1.4GB",
+            "isDub": false,
+            "pahe": "https://pahe.win/example-1080",
+            "download": "https://kwik.cx/mp4/example?file=AnimePahe_One_Piece_-_1110_1080p_SubsPlease.mp4"
+          }
+        ]
+      }
+    },
+    "downloadLinksOnly": {
+      "request": "GET /api/play/download-links?url=https://pahe.win/example",
+      "response": {
+        "downloadUrl": "https://download.example-cdn.com/file.mp4",
+        "type": "redirected_download",
+        "originalUrl": "https://pahe.win/example",
+        "resolvedUrl": "https://kwik.cx/f/example"
+      }
+    },
+    "queue": {
+      "request": "GET /api/queue",
+      "response": {
+        "data": [
+          {
+            "title": "One Piece",
+            "episode": "1111",
+            "resolution": "1080",
+            "filesize": "1.3GB",
+            "fansub": "SubsPlease",
+            "audio": "jpn",
+            "progress": "processing",
+            "instant": null,
+            "current_duration": "00:08:14",
+            "original": "00:24:00",
+            "session": "one-piece-abc123",
+            "published": "2026-04-13T02:00:00+00:00"
+          }
+        ]
+      }
+    }
+  },
+  "frontendImplementationHints": {
+    "llmPrompting": [
+      "Use request + response examples as schema hints when generating UI state.",
+      "For robust parsing, prioritize keys that are always present: status/message on error, and data arrays on list endpoints."
+    ],
+    "fallbacks": [
+      "Treat missing optional fields as null/empty string.",
+      "If downloads are slow, call /api/play/:session?episodeId=...&downloads=false first, then hydrate download links lazily."
+    ]
+  }
+}
