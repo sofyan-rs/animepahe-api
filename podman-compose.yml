@@ -1,0 +1,30 @@
+version: "3.9"
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Containerfile
+    container_name: animepahe-api
+    env_file:
+      - .env
+    environment:
+      # Ensure the service binds correctly inside container
+      - PORT=3000
+      # Uncomment if you want Redis from this compose stack
+      # - REDIS_URL=redis://redis:6379
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+
+  redis:
+    image: docker.io/library/redis:7-alpine
+    container_name: animepahe-redis
+    restart: unless-stopped
+    profiles:
+      - redis
+    volumes:
+      - redis-data:/data
+
+volumes:
+  redis-data:
