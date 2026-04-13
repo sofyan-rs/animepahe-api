@@ -106,13 +106,23 @@ class AnimeInfoModel {
                 .trim()
                 .replace(/(\w{3} \d{2}, \d{4}) +to +(\w{3} \d{2}, \d{4})/, '$1 to $2') || null,
             season: $('.anime-info p:contains("Season:") a').text().trim() || null,
-            studio: $('.anime-info p:contains("Studio:")').text().split('Studio:')[1]?.trim() || null,
-            themes: $('.anime-info p:contains("Themes:")')
-                .find('a')
+            studio: (
+                $('.anime-info p:contains("Studio:")').text().split('Studio:')[1] ||
+                $('.anime-info p:contains("Studios:")').text().split('Studios:')[1] ||
+                null
+            )?.trim() || null,
+            themes: (
+                $('.anime-info p:contains("Themes:")').find('a').toArray().length > 0
+                    ? $('.anime-info p:contains("Themes:")').find('a')
+                    : $('.anime-info p:contains("Theme:")').find('a')
+            )
                 .map((i, el) => $(el).text().trim())
                 .get() || [],
-            demographic: $('.anime-info p:contains("Demographic:")')
-                .find('a')
+            demographic: (
+                $('.anime-info p:contains("Demographic:")').find('a').toArray().length > 0
+                    ? $('.anime-info p:contains("Demographic:")').find('a')
+                    : $('.anime-info p:contains("Demographics:")').find('a')
+            )
                 .map((i, el) => $(el).text().trim())
                 .get() || [],
             external_links: $('.anime-info p.external-links a').map((i, el) => ({
