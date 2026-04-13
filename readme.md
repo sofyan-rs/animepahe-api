@@ -24,7 +24,7 @@ An unofficial API for [Animepahe](https://animepahe.pw/) that provides anime met
 ## Quick Start
 
 ```bash
-git clone https://github.com/ElijahCodes12345/animepahe-api.git
+git clone https://github.com/sofyan-rs/animepahe-api.git
 cd animepahe-api
 bun install
 bunx playwright install
