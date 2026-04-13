@@ -23,8 +23,14 @@ type PageLike = {
   setExtraHTTPHeaders: (headers: Record<string, string>) => Promise<void>;
   goto: (url: string, options: Record<string, unknown>) => Promise<void>;
   waitForTimeout: (ms: number) => Promise<void>;
-  waitForSelector: (selector: string, options: Record<string, unknown>) => Promise<void>;
-  waitForFunction: (fn: () => boolean, options: Record<string, unknown>) => Promise<void>;
+  waitForSelector: (
+    selector: string,
+    options: Record<string, unknown>,
+  ) => Promise<void>;
+  waitForFunction: (
+    fn: () => boolean,
+    options: Record<string, unknown>,
+  ) => Promise<void>;
   content: () => Promise<string>;
   $: (selector: string) => Promise<unknown>;
   url: () => string;
@@ -36,7 +42,9 @@ type BrowserContextLike = {
 };
 
 type BrowserLike = {
-  newContext: (options?: Record<string, unknown>) => Promise<BrowserContextLike>;
+  newContext: (
+    options?: Record<string, unknown>,
+  ) => Promise<BrowserContextLike>;
   close: () => Promise<void>;
 };
 

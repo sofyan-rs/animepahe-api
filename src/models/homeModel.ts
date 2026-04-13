@@ -5,6 +5,8 @@ import viewsStore from "../utils/viewsStore";
 import { CustomError } from "../middleware/errorHandler";
 
 class HomeModel {
+  static readonly POPULAR_CACHE_TTL_MS = 6 * 60 * 60 * 1000;
+
   static async getAiringAnime(page: number) {
     const results = await Animepahe.getData("airing", { page });
 
@@ -41,17 +43,43 @@ class HomeModel {
     const offset = (currentPage - 1) * perPage;
 
     const { total, rows } = viewsStore.getTopViewed(perPage, offset);
+    const sessions = rows.map((row) => row.session);
+    const cachedSeries = viewsStore.getCachedSeries(sessions);
+    const now = Date.now();
+
     const series = await Promise.all(
       rows.map(async (row) => {
+        const cached = cachedSeries.get(row.session);
+        const cachedAge = cached
+          ? now - new Date(cached.updatedAt).getTime()
+          : Number.POSITIVE_INFINITY;
+        const shouldRefresh = !cached || !Number.isFinite(cachedAge) || cachedAge > this.POPULAR_CACHE_TTL_MS;
+
+        if (!shouldRefresh) {
+          return {
+            ...cached.payload,
+            session: row.session,
+            views: row.views,
+          };
+        }
+
         try {
           const animeInfo = await AnimeInfoModel.getAnimeInfo(row.session);
           if (!animeInfo || typeof animeInfo !== "object") return null;
+          viewsStore.upsertCachedSeries(row.session, animeInfo as Record<string, unknown>);
           return {
             ...(animeInfo as Record<string, unknown>),
             session: row.session,
             views: row.views,
           };
         } catch {
+          if (cached) {
+            return {
+              ...cached.payload,
+              session: row.session,
+              views: row.views,
+            };
+          }
           return null;
         }
       }),
