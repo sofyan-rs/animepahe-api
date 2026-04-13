@@ -35,31 +35,43 @@ class HomeModel {
     return DataProcessor.processApiData(results, "search");
   }
 
-  static async getTopAiringAnime(page: number, limit: number) {
-    const airing = (await this.getAiringAnime(page)) as {
-      paginationInfo?: Record<string, unknown>;
-      data: Array<Record<string, unknown>>;
-    };
+  static async getPopularSeries(page: number, limit: number) {
+    const currentPage = Math.max(page, 1);
+    const perPage = Math.max(limit, 1);
+    const offset = (currentPage - 1) * perPage;
 
-    const sessions = (airing.data || [])
-      .map((item) => (typeof item.session === "string" ? item.session : null))
-      .filter((session): session is string => Boolean(session));
+    const { total, rows } = viewsStore.getTopViewed(perPage, offset);
+    const series = await Promise.all(
+      rows.map(async (row) => {
+        try {
+          const animeInfo = await AnimeInfoModel.getAnimeInfo(row.session);
+          if (!animeInfo || typeof animeInfo !== "object") return null;
+          return {
+            ...(animeInfo as Record<string, unknown>),
+            session: row.session,
+            views: row.views,
+          };
+        } catch {
+          return null;
+        }
+      }),
+    );
 
-    const viewCounts = viewsStore.getViewCounts(sessions);
-    const ranked = (airing.data || [])
-      .map((item) => {
-        const session = typeof item.session === "string" ? item.session : "";
-        return {
-          ...item,
-          views: viewCounts.get(session) ?? 0,
-        };
-      })
-      .sort((a, b) => (b.views as number) - (a.views as number))
-      .slice(0, limit);
+    const data = series.filter((item): item is NonNullable<typeof item> => item !== null);
+    const lastPage = Math.max(Math.ceil(total / perPage), 1);
+    const from = total === 0 ? 0 : offset + 1;
+    const to = Math.min(offset + data.length, total);
 
     return {
-      paginationInfo: airing.paginationInfo,
-      data: ranked,
+      paginationInfo: {
+        total,
+        perPage,
+        currentPage,
+        lastPage,
+        from,
+        to,
+      },
+      data,
     };
   }
 
