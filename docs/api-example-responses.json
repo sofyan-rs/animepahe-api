@@ -33,6 +33,7 @@
             "edition": null,
             "fansub": "SubsPlease",
             "image": "https://i.animepahe.ru/snapshots/example.jpg",
+            "poster": "https://i.animepahe.ru/covers/example.jpg",
             "disc": null,
             "session": "one-piece-abc123",
             "link": "https://animepahe.pw/anime/one-piece-abc123",
@@ -78,12 +79,14 @@
         {
           "title": "A Sign of Affection",
           "url": "/anime/a-sign-of-affection-z1y2x3",
-          "type": "TV"
+          "type": "TV",
+          "session": "a-sign-of-affection-z1y2x3"
         },
         {
           "title": "Aho Girl",
           "url": "/anime/aho-girl-a1b2c3",
-          "type": "TV"
+          "type": "TV",
+          "session": "aho-girl-a1b2c3"
         }
       ]
     },

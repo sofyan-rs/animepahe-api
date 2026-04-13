@@ -22,16 +22,24 @@ class AnimeListModel {
         const $ = cheerio.load(pageHtml);
         const animeList = [];
         
+        const extractSessionFromUrl = (url?: string | null) => {
+            if (!url) return null;
+            return url.replace(/^\/anime\//, '').replace(/^anime\//, '').replace(/^\/+|\/+$/g, '') || null;
+        };
+
         const processPane = (pane) => {
             $(pane).find('div.col-12.col-md-6').each((j, entry) => {
                 const $entry = $(entry);
                 const $link = $entry.find('a');
-                const $badge = $entry.find('span.badge');
+                const href = $link.attr('href') || null;
+                const badges = $entry.find('span.badge').map((_, el) => $(el).text().trim()).get().filter(Boolean);
+                const session = extractSessionFromUrl(href);
 
                 animeList.push({
                     title: $link.attr('title') || $link.text().trim(),
-                    url: $link.attr('href'),
-                    type: $badge.length ? $badge.first().text().trim() : null
+                    url: href,
+                    type: badges[0] || null,
+                    session
                 });
             });
         };

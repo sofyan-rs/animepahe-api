@@ -90,6 +90,7 @@ class DataProcessor {
             edition: item.edition ?? null,
             fansub: item.fansub ?? null,
             image: item.snapshot ?? null,
+            poster: item.thumb_cover ?? item.anime_cover ?? item.anime_poster ?? item.poster ?? null,
             disc: item.disc ?? null,
             session: item.anime_session ?? null,
             link: (item.session ? `${Config.getUrl('animeInfo', String(item.session))}` : '') || null,
