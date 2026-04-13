@@ -2,7 +2,7 @@
   "name": "AnimepaheAPI",
   "description": "An unofficial REST API for Animepahe that provides access to anime information, episodes, and streaming links.",
   "repository": "https://github.com/ElijahCodes12345/animepahe-api",
-  "logo": "https://animepahe.ru/apple-touch-icon.png",
+  "logo": "https://animepahe.pw/apple-touch-icon.png",
   "keywords": ["node", "express", "anime", "api"],
   "env": {
     "PORT": {
@@ -10,7 +10,7 @@
       "required": false
     },
     "BASE_URL": {
-      "description": "Base URL for animepahe (default: https://animepahe.ru)",
+      "description": "Base URL for animepahe (default: https://animepahe.pw)",
       "required": false
     },
     "USER_AGENT": {

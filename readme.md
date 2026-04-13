@@ -78,7 +78,7 @@ It works as it is but if you want you can create a `.env` file in the root direc
 
 ```env
 PORT=3000 # Optional
-BASE_URL=https://animepahe.ru # Optional
+BASE_URL=https://animepahe.pw # Optional
 USER_AGENT=  # Optional
 COOKIES=     # Optional - for manual cookie management
 USE_PROXY=false

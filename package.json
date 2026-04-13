@@ -1,11 +1,11 @@
 {
   "name": "animepahe-api",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "src/index.ts",
   "scripts": {
-    "dev": "nodemon app.js",
-    "start": "node app.js",
-    "test": "nodemon test.js"
+    "dev": "bun run --watch src/server.ts",
+    "start": "bun run src/server.ts",
+    "test": "bun test"
   },
   "keywords": [],
   "author": "",
@@ -19,6 +19,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",
     "express": "^4.21.2",
+    "hono": "^4.8.5",
     "jsdom": "^22.1.0",
     "playwright": "^1.52.0",
     "playwright-core": "^1.52.0",
@@ -27,6 +28,9 @@
     "redis": "^5.5.6"
   },
   "devDependencies": {
-    "nodemon": "^3.1.9"
+    "@types/node": "^24.5.2",
+    "bun-types": "^1.2.21",
+    "nodemon": "^3.1.9",
+    "typescript": "^5.9.2"
   }
 }
