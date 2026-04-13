@@ -44,6 +44,70 @@
         ]
       }
     },
+    "popularSeries": {
+      "request": "GET /api/popular-series?page=1&limit=10",
+      "notes": [
+        "Ranked by stored series view counts.",
+        "A view is recorded when GET /api/:session is called.",
+        "Response items follow animeInfo schema and include views."
+      ],
+      "response": {
+        "paginationInfo": {
+          "total": 245,
+          "perPage": 10,
+          "currentPage": 1,
+          "lastPage": 25,
+          "from": 1,
+          "to": 10
+        },
+        "data": [
+          {
+            "ids": {
+              "animepahe_id": "4432",
+              "anidb": "69",
+              "anilist": "21",
+              "animePlanet": "one-piece",
+              "ann": "3784",
+              "kitsu": "one-piece",
+              "mal": "21"
+            },
+            "title": "One Piece",
+            "image": "https://i.animepahe.ru/posters/onepiece.jpg",
+            "preview": "https://www.youtube.com/watch?v=example",
+            "synopsis": "Gold Roger was known as the Pirate King...",
+            "synonym": "OP",
+            "japanese": "ONE PIECE",
+            "type": "TV",
+            "episodes": "Unknown",
+            "status": "Currently Airing",
+            "duration": "24 min",
+            "aired": "Oct 20, 1999 to ?",
+            "season": "Fall",
+            "studio": "Toei Animation",
+            "themes": [
+              "Adventure",
+              "Fantasy"
+            ],
+            "demographic": [
+              "Shounen"
+            ],
+            "external_links": [
+              {
+                "name": "Official Site",
+                "url": "https://one-piece.com"
+              }
+            ],
+            "genre": [
+              "Action",
+              "Adventure",
+              "Fantasy"
+            ],
+            "session": "one-piece-abc123",
+            "views": 1540
+          }
+        ]
+      }
+    },
     "search": {
       "request": "GET /api/search?q=naruto&page=1",
       "response": {

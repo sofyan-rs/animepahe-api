@@ -14,6 +14,20 @@ homeRoutes.get("/airing", cache(30), async (c) => {
   return c.json(airingAnime);
 });
 
+homeRoutes.get("/popular-series", cache(30), async (c) => {
+  const page = Number.parseInt(c.req.query("page") ?? "1", 10) || 1;
+  const limit = Number.parseInt(c.req.query("limit") ?? "20", 10) || 20;
+  const normalizedLimit = Math.min(Math.max(limit, 1), 50);
+  const popularSeries = await HomeModel.getTopAiringAnime(
+    page,
+    normalizedLimit,
+  );
+  if (!popularSeries) {
+    throw new CustomError("No popular series found", 404);
+  }
+  return c.json(popularSeries);
+});
+
 homeRoutes.get("/search", cache(120), async (c) => {
   const query = c.req.query("q");
   const page = Number.parseInt(c.req.query("page") ?? "1", 10) || 1;

@@ -1,11 +1,21 @@
 import { Hono } from "hono";
+import type { MiddlewareHandler } from "hono";
 import AnimeInfoModel from "../models/animeInfoModel";
 import { CustomError } from "../middleware/errorHandler";
 import { cache } from "../middleware/cache";
+import viewsStore from "../utils/viewsStore";
 
 export const animeInfoRoutes = new Hono();
 
-animeInfoRoutes.get("/:id", cache(86400), async (c) => {
+const trackAnimeView: MiddlewareHandler = async (c, next) => {
+  const animeId = c.req.param("id");
+  if (animeId) {
+    viewsStore.recordView(animeId);
+  }
+  await next();
+};
+
+animeInfoRoutes.get("/:id", trackAnimeView, cache(86400), async (c) => {
   const animeId = c.req.param("id");
   if (!animeId) {
     throw new CustomError("Anime ID is required", 400);

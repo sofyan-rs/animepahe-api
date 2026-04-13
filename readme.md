@@ -14,6 +14,7 @@ An unofficial API for [Animepahe](https://animepahe.pw/) that provides anime met
 ## Features
 
 - Airing anime feed
+- Popular series ranking (from tracked series views)
 - Search + anime list browsing
 - Anime details + releases
 - Streaming links with multiple sources/resolutions
@@ -94,12 +95,17 @@ Headers returned on active rate limiting:
 
 ## API Endpoints
 
-### Airing
+### Airing + Popular
 
 ```http
 GET /api/airing
 GET /api/airing?page=2
+GET /api/popular-series
+GET /api/popular-series?page=1&limit=10
 ```
+
+`/api/popular-series` returns anime-info style objects plus a `views` field.
+Views are tracked when `GET /api/:session` is requested.
 
 ### Search
 
