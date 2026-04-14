@@ -5,6 +5,12 @@ type ViewCountRow = {
   views: number;
 };
 
+type CachedSeriesRow = {
+  session: string;
+  payload: string;
+  updated_at: string;
+};
+
 class ViewsStore {
   db: Database;
 
@@ -14,6 +20,13 @@ class ViewsStore {
       CREATE TABLE IF NOT EXISTS anime_views (
         session TEXT PRIMARY KEY,
         views INTEGER NOT NULL DEFAULT 0,
+        updated_at TEXT NOT NULL
+      );
+    `);
+    this.db.exec(`
+      CREATE TABLE IF NOT EXISTS popular_series_cache (
+        session TEXT PRIMARY KEY,
+        payload TEXT NOT NULL,
         updated_at TEXT NOT NULL
       );
     `);
@@ -71,6 +84,51 @@ class ViewsStore {
       total: totalRow?.total ?? 0,
       rows,
     };
+  }
+
+  getCachedSeries(sessions: string[]) {
+    const validSessions = sessions.filter(Boolean);
+    if (validSessions.length === 0) {
+      return new Map<string, { payload: Record<string, unknown>; updatedAt: string }>();
+    }
+
+    const placeholders = validSessions.map(() => "?").join(",");
+    const rows = this.db
+      .prepare(
+        `
+        SELECT session, payload, updated_at
+        FROM popular_series_cache
+        WHERE session IN (${placeholders})
+      `,
+      )
+      .all(...validSessions) as CachedSeriesRow[];
+
+    const result = new Map<string, { payload: Record<string, unknown>; updatedAt: string }>();
+    for (const row of rows) {
+      try {
+        const payload = JSON.parse(row.payload) as Record<string, unknown>;
+        result.set(row.session, { payload, updatedAt: row.updated_at });
+      } catch {
+        // ignore corrupt cache rows
+      }
+    }
+    return result;
+  }
+
+  upsertCachedSeries(session: string, payload: Record<string, unknown>) {
+    if (!session) return;
+    const now = new Date().toISOString();
+    this.db
+      .prepare(
+        `
+        INSERT INTO popular_series_cache (session, payload, updated_at)
+        VALUES (?, ?, ?)
+        ON CONFLICT(session) DO UPDATE SET
+          payload = excluded.payload,
+          updated_at = excluded.updated_at
+      `,
+      )
+      .run(session, JSON.stringify(payload), now);
   }
 }
 
