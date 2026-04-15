@@ -1,27 +1,15 @@
-/**
- * AnimePahe API - Node.js Library
- * ================================
- * This file serves as the entry point for using animepahe-api as a library.
- * 
- * Install: npm install github:ElijahCodes12345/animepahe-api
- * 
- * Usage:
- *   const animepahe = require('animepahe-api');
- *   const results = await animepahe.search('Naruto');
- */
-
 // Core Scraper (Singleton)
-import Animepahe from './scrapers/animepahe';
+import Animepahe from "./scrapers/animepahe";
 
 // Models (Business Logic)
-import HomeModel from './models/homeModel';
-import AnimeInfoModel from './models/animeInfoModel';
-import AnimeListModel from './models/animeListModel';
-import PlayModel from './models/playModel';
-import QueueModel from './models/queueModel';
+import HomeModel from "./models/homeModel";
+import AnimeInfoModel from "./models/animeInfoModel";
+import AnimeListModel from "./models/animeListModel";
+import PlayModel from "./models/playModel";
+import QueueModel from "./models/queueModel";
 
 // Config Utility (for setting cookies, base URL, etc.)
-import Config from './utils/config';
+import Config from "./utils/config";
 
 /**
  * Initialize the library.
@@ -29,7 +17,7 @@ import Config from './utils/config';
  * @returns {Promise<boolean>}
  */
 async function initialize() {
-    return Animepahe.initialize();
+  return Animepahe.initialize();
 }
 
 /**
@@ -39,7 +27,7 @@ async function initialize() {
  * @returns {Promise<object>} - Search results
  */
 async function search(query: string, page = 1) {
-    return HomeModel.searchAnime(query, page);
+  return HomeModel.searchAnime(query, page);
 }
 
 /**
@@ -48,7 +36,7 @@ async function search(query: string, page = 1) {
  * @returns {Promise<object>} - Airing anime list
  */
 async function getAiring(page = 1) {
-    return HomeModel.getAiringAnime(page);
+  return HomeModel.getAiringAnime(page);
 }
 
 /**
@@ -57,7 +45,7 @@ async function getAiring(page = 1) {
  * @returns {Promise<object>} - Anime details
  */
 async function getInfo(animeId: string) {
-    return AnimeInfoModel.getAnimeInfo(animeId);
+  return AnimeInfoModel.getAnimeInfo(animeId);
 }
 
 /**
@@ -67,8 +55,8 @@ async function getInfo(animeId: string) {
  * @param {number} [page=1] - Page number
  * @returns {Promise<object>} - Episode list
  */
-async function getReleases(animeId: string, sort = 'episode_desc', page = 1) {
-    return AnimeInfoModel.getAnimeReleases(animeId, sort, page);
+async function getReleases(animeId: string, sort = "episode_desc", page = 1) {
+  return AnimeInfoModel.getAnimeReleases(animeId, sort, page);
 }
 
 /**
@@ -79,8 +67,12 @@ async function getReleases(animeId: string, sort = 'episode_desc', page = 1) {
  * @param {boolean} [includeDownloads=true] - Whether to include download links
  * @returns {Promise<object>} - Streaming sources with m3u8 URLs
  */
-async function getStreamingLinks(animeId: string, episodeId: string, includeDownloads = true) {
-    return PlayModel.getStreamingLinks(animeId, episodeId, includeDownloads);
+async function getStreamingLinks(
+  animeId: string,
+  episodeId: string,
+  includeDownloads = true,
+) {
+  return PlayModel.getStreamingLinks(animeId, episodeId, includeDownloads);
 }
 
 /**
@@ -89,7 +81,7 @@ async function getStreamingLinks(animeId: string, episodeId: string, includeDown
  * @returns {Promise<object>} - Direct download URL
  */
 async function getDownloadLink(url: string) {
-    return PlayModel.getDownloadLinks(url);
+  return PlayModel.getDownloadLinks(url);
 }
 
 /**
@@ -100,7 +92,7 @@ async function getDownloadLink(url: string) {
  * @returns {Promise<object>} - Anime list
  */
 async function getAnimeList(tab?: string, tag1?: string, tag2?: string) {
-    return AnimeListModel.getAnimeList(tab, tag1, tag2);
+  return AnimeListModel.getAnimeList(tab, tag1, tag2);
 }
 
 /**
@@ -108,32 +100,32 @@ async function getAnimeList(tab?: string, tag1?: string, tag2?: string) {
  * @returns {Promise<object>} - Queue data
  */
 async function getQueue() {
-    return QueueModel.getQueue();
+  return QueueModel.getQueue();
 }
 
 const models = {
-    HomeModel,
-    AnimeInfoModel,
-    AnimeListModel,
-    PlayModel,
-    QueueModel
+  HomeModel,
+  AnimeInfoModel,
+  AnimeListModel,
+  PlayModel,
+  QueueModel,
 };
 
 // Export everything
 export {
-    // High-level API (Recommended)
-    initialize,
-    search,
-    getAiring,
-    getInfo,
-    getReleases,
-    getStreamingLinks,
-    getDownloadLink,
-    getAnimeList,
-    getQueue,
-    
-    // Low-level access (Advanced)
-    Animepahe,        // Raw scraper singleton
-    Config,           // Configuration utility
-    models
+  // High-level API (Recommended)
+  initialize,
+  search,
+  getAiring,
+  getInfo,
+  getReleases,
+  getStreamingLinks,
+  getDownloadLink,
+  getAnimeList,
+  getQueue,
+
+  // Low-level access (Advanced)
+  Animepahe, // Raw scraper singleton
+  Config, // Configuration utility
+  models,
 };
