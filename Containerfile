@@ -13,6 +13,6 @@ COPY . .
 RUN bunx playwright install --with-deps chromium
 
 ENV NODE_ENV=production
-EXPOSE 3000
+EXPOSE 4000
 
 CMD ["bun", "run", "start"]

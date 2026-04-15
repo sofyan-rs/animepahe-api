@@ -6,7 +6,7 @@
   "keywords": ["node", "express", "anime", "api"],
   "env": {
     "PORT": {
-      "description": "Port number for the server (default: 3000)",
+      "description": "Port number for the server (default: 4000)",
       "required": false
     },
     "BASE_URL": {

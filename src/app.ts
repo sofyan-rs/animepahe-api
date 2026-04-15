@@ -59,7 +59,9 @@ const corsMiddleware: MiddlewareHandler = async (c, next) => {
 const setHostUrl: MiddlewareHandler = async (c, next) => {
   const url = new URL(c.req.url);
   const protocol =
-    c.req.header("x-forwarded-proto") ?? url.protocol.replace(":", "") ?? "https";
+    c.req.header("x-forwarded-proto") ??
+    url.protocol.replace(":", "") ??
+    "https";
   const host = c.req.header("host") ?? url.host;
   Config.setHostUrl(protocol, host);
   await next();
@@ -83,7 +85,7 @@ app.notFound((c) =>
     {
       status: 404,
       message:
-        "Route not found. Please check the API documentation at https://github.com/ElijahCodes12345/animepahe-api",
+        "Route not found. Please check the API documentation at https://github.com/sofyan-rs/animepahe-api",
     },
     404,
   ),

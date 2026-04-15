@@ -10,11 +10,11 @@ services:
       - .env
     environment:
       # Ensure the service binds correctly inside container
-      - PORT=3000
+      - PORT=4000
       # Uncomment if you want Redis from this compose stack
       # - REDIS_URL=redis://redis:6379
     ports:
-      - "3000:3000"
+      - "4000:4000"
     restart: unless-stopped
 
   redis:

@@ -45,7 +45,7 @@ bun run start
 ## Environment Variables
 
 ```env
-PORT=3000
+PORT=4000
 BASE_URL=https://animepahe.pw
 USER_AGENT=
 COOKIES=
@@ -164,3 +164,8 @@ GET /api/test
 ## Disclaimer
 
 This project is unofficial and not affiliated with Animepahe.
+
+## Credit
+
+This project is a rewrite based on the original work at [ElijahCodes12345/animepahe-api](https://github.com/ElijahCodes12345/animepahe-api).  
+Credit to the original repository and its contributors for the foundation and inspiration.
